@@ -15,7 +15,10 @@ type TaskListProps = {
 
 const TaskList: React.FC<TaskListProps> = ({ tasks, onToggleComplete, onDeleteTask }) => {
     return (
-        <div>
+        <>
+            {tasks.length === 0 && (
+                <p>No tasks available. Please add a task.</p>
+            )}
             {tasks.map(task => (
                 <div key={task.id}>
                     <TaskItem
@@ -27,7 +30,7 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, onToggleComplete, onDeleteTa
                     />
                 </div>
             ))}
-        </div>
+        </>
     );
 };
 

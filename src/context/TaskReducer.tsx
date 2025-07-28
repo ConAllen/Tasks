@@ -32,10 +32,38 @@ export const taskReducer: Reducer<TaskState, TaskAction> = (state, action) => {
                 )
             };
 
+        case TaskReducerActionType.SET_TASKS:
+            if (Array.isArray(action.payload)) {
+                return {
+                    ...state,
+                    tasks: action.payload as Task[]
+                };
+            }
+            return state;
+        case TaskReducerActionType.TASKS_LOADING:
+            return {
+                ...state,
+                isLoading: action.payload as boolean
+            };
+
+
+
         default:
             return state;
     }
 };
+
+
+// actions
+export const setTasks = (tasks: Task[]) => ({
+    type: TaskReducerActionType.SET_TASKS,
+    payload: tasks,
+});
+
+export const addTask = (task: Task) => ({
+    type: TaskReducerActionType.ADD_TASK,
+    payload: task,
+});
 
 export const TaskContext = createContext<{
     initialState: TaskState;

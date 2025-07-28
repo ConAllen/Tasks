@@ -11,6 +11,7 @@ export type TaskAction = {
     | boolean
     | Error
     | Task
+    | Task[]
     | undefined;
 };
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -19,7 +20,10 @@ export const enum TaskReducerActionType {
     ADD_TASK = 'ADD_TASK',
     REMOVE_TASK = 'REMOVE_TASK',
     TOGGLE_TASK = 'TOGGLE_TASK',
-    UPDATE_TASK = 'UPDATE_TASK'
+    UPDATE_TASK = 'UPDATE_TASK',
+    TASKS_LOADING = 'TASKS_LOADING',
+    TASKS_ERROR = 'TASKS_ERROR',
+    SET_TASKS = 'SET_TASKS',
 }
 
 
