@@ -1,29 +1,23 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import TaskInput from '../components/TaskInput';
 import TaskList from '../components/TaskList';
-import { TaskContext } from '../context/TaskReducer';
+
+import { useTaskActions } from '../hooks/useTaskActions';
 
 const TaskContainer: React.FC = () => {
 
-    const context = useContext(TaskContext);
-
-    if (!context) {
-        throw new Error('TaskContext is undefined. Make sure TaskContainer is wrapped in TaskProvider.');
-    }
-
-    const { initialState } = context;
-    const { tasks } = initialState;
+    const { addTask, toggleTask, deleteTask, fetchTasks } = useTaskActions();
 
     const onAddTask = (task: string) => {
-        console.log(`Task added: ${task}`);
-    };
+        addTask(task);
+    }
 
     const onDeleteTask = (id: string) => {
-        console.log(`Task deleted: ${id}`);
+        deleteTask(id);
     };
 
     const onCompleteTask = (id: string) => {
-        console.log(`Task completed: ${id}`);
+        toggleTask(id);
     };
 
 
@@ -32,7 +26,7 @@ const TaskContainer: React.FC = () => {
         <div>
             <h2>Tasks</h2>
             <TaskInput onAddTask={onAddTask} />
-            <TaskList onToggleComplete={onCompleteTask} onDeleteTask={onDeleteTask} tasks={tasks} />
+            <TaskList onToggleComplete={onCompleteTask} onDeleteTask={onDeleteTask} tasks={fetchTasks()} />
         </div>
     );
 };

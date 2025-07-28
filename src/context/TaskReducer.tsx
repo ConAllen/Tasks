@@ -1,20 +1,10 @@
 import { createContext, type Reducer } from "react";
 import { TaskReducerActionType, type Task, type TaskAction, type TaskState } from "../types";
 
-const tasks = [{
-    id: '1',
-    title: 'Sample Task',
-    completed: false
-},
-{
-    id: '2',
-    title: 'Another Task',
-    completed: true
-}]
 
 
 export const initialState: TaskState = {
-    tasks: tasks as Task[],
+    tasks: [] as Task[],
     isLoading: false,
     error: null as Error | null,
 }
@@ -29,7 +19,18 @@ export const taskReducer: Reducer<TaskState, TaskAction> = (state, action) => {
                 };
             }
             return state;
-
+        case TaskReducerActionType.REMOVE_TASK:
+            return {
+                ...state,
+                tasks: state.tasks.filter(task => task.id !== action.payload)
+            };
+        case TaskReducerActionType.TOGGLE_TASK:
+            return {
+                ...state,
+                tasks: state.tasks.map(task =>
+                    task.id === action.payload ? { ...task, completed: !task.completed } : task
+                )
+            };
 
         default:
             return state;
